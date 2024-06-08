@@ -88,7 +88,7 @@ class ImageProcessingBot(Bot):
         elif action == 'rotate':
             img.rotate()
         elif action == 'contour':
-            img.contour()
+            img.contour()  # Call the contour function as expected
         elif action == 'salt and pepper':
             img.salt_n_pepper()
         else:
