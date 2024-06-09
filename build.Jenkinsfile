@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        IMG_NAME = "PolyBot:${BUILD_NUMBER}"
+        IMG_NAME = "polybot:${BUILD_NUMBER}"
     }
 
     stages {
