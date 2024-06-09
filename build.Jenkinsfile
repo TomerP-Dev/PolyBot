@@ -10,7 +10,7 @@ pipeline {
         stage('Build docker image') {
             steps {
               withCredentials(
-                 [usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASS')]
+                 [usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASS')]
               ) {
                     sh '''
                         # cd polybot
