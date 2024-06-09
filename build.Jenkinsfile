@@ -1,24 +1,35 @@
+
 pipeline {
     agent any
 
-    environment{
+    environment {
         IMG_NAME = "PolyBot:${BUILD_NUMBER}"
     }
 
     stages {
         stage('Build docker image') {
             steps {
-                sh '''
-                    # Build the Docker image using the Dockerfile in the current directory
-                    docker build -t PolyBot:$IMG_NAME .
-
-                    # Tag the image for pushing to the registry
-                    docker tag $IMG_NAME tomerp18/$IMG_NAME
-
-                    # Push the image to the specified registry
-                    docker push tomerp18/$IMG_NAME
-                '''
+              withCredentials(
+                 [usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASS')]
+              ) {
+                    sh '''
+                        # cd polybot
+                        docker login -u $DOCKER_USERNAME -p $DOCKER_PASS
+                        docker build -t $IMG_NAME .
+                        docker tag $IMG_NAME tomerp18/$IMG_NAME
+                        docker push tomerp18/$IMG_NAME
+                    '''
+              }
             }
         }
+
+        stage('Trigger Deploy') {
+            steps {
+                build job: 'BotDeploy', wait: false, parameters: [
+                    string(name: 'IMAGE_URL', value: "tomerp18/$IMG_NAME")
+                ]
+            }
+        }
+
     }
 }
