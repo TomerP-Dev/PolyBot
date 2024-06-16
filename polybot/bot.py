@@ -3,7 +3,7 @@ from loguru import logger
 import os
 import time
 from telebot.types import InputFile
-from img_proc import Img  # Adjust the import path as necessary
+from .img_proc import Img  # Adjust the import path as necessary
 
 
 def is_current_msg_photo(msg):
