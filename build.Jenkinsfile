@@ -17,6 +17,7 @@ pipeline {
                         docker tag %IMG_NAME% tomerp18/%IMG_NAME%
                         docker push tomerp18/%IMG_NAME%
                     '''
+                 }
               }
             }
         }

@@ -1,20 +1,20 @@
-# Use python:3.12-alpine base image
+# Use an official Python runtime as a parent image
 FROM python:3.12-alpine
 
-# Set working directory for app
+# Set the working directory in the container
 WORKDIR /app
 
-# Upgrade pip for better practices
-RUN pip install --upgrade pip
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Copy requirements.txt for installation
-COPY requirements.txt .
+# Copy requirements.txt specifically
+COPY polybot/requirements.txt /app
 
-# Install dependencies from requirements.txt (no cache)
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy entire project directory
-COPY . .
+# Make port 80 available to the world outside this container
+EXPOSE 80
 
-# Run app.py as the entry point
-CMD ["python3", "app.py"]
+# Run app.py when the container launches
+CMD ["python", "app.py"]
