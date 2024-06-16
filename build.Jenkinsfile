@@ -10,10 +10,6 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASS')]) {
                     bat '''
-                        echo Current directory:
-                        dir
-                        echo Polybot directory:
-                        dir polybot
                         docker login -u %DOCKER_USERNAME% -p %DOCKER_PASS%
                         docker build -t %IMG_NAME% .
                         docker tag %IMG_NAME% tomerp18/%IMG_NAME%
