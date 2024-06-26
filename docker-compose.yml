@@ -14,6 +14,6 @@ services:
     # Build Python image (polybot directory), expose app port (set with APP_PORT env var)
     build: ./polybot
     expose:
-      - "${APP_PORT:8443}"
+      - "8443"
     volumes:
       - ./:/app
