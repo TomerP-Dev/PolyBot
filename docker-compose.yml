@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    # Build Nginx image, map container port 8334 to host port 80
+    # Build Nginx image, map container port 8334 to host port 8081
     build: .
     ports:
       - "8081:8334"
