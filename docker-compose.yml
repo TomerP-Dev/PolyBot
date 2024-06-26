@@ -1,19 +1,27 @@
 version: '3.8'
 
 services:
-  web:
-    # Build Nginx image, map container port 8334 to host port 8081
-    build: .
-    ports:
-      - "8081:8334"
-    volumes:
-      - ./:/usr/share/nginx/html
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-
   app:
-    # Build Python image (polybot directory)
-    build: ./polybot
+    # Build the Docker image using the current directory as the build context
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Expose the port that the app will run on
     expose:
       - "8443"
+    # Mount the current directory to /app inside the container
     volumes:
       - ./:/app
+
+  web:
+    # Build the Docker image from the Nginx directory
+    build:
+      context: ./Nginx
+      dockerfile: Dockerfile
+    # Expose the port that Nginx will run on and map it to the host port 8081
+    ports:
+      - "8081:8334"
+    # Mount the Nginx configuration file and static website files
+    volumes:
+      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./Nginx/html:/usr/share/nginx/html:ro
