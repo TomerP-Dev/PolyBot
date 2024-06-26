@@ -8,7 +8,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY html /usr/share/nginx/html
 
 # Expose the port that Nginx will run on
-EXPOSE 5050
+EXPOSE 50
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]

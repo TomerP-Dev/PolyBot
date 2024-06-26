@@ -6,11 +6,11 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8443:8443"
+      - "80:80"
 
   nginx:
     build:
       context: ./Nginx
       dockerfile: Dockerfile
     ports:
-      - "5050:5050"
+      - "50:50"
