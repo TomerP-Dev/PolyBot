@@ -1,16 +1,19 @@
 version: '3.8'
 
 services:
-  flask-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  web:
+    # Build Nginx image, map container port 8334 to host port 80
+    build: .
     ports:
-      - "8443:8443"
+      - "8081:8334"
+    volumes:
+      - ./:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
 
-  nginx:
-    build:
-      context: ./Nginx
-      dockerfile: Dockerfile
-    ports:
-      - "8334:8334"
+  app:
+    # Build Python image (polybot directory), expose app port (set with APP_PORT env var)
+    build: ./polybot
+    expose:
+      - "${APP_PORT:8443}"
+    volumes:
+      - ./:/app
