@@ -21,7 +21,6 @@ services:
     # Expose the port that Nginx will run on and map it to the host port 8081
     ports:
       - "8081:8334"
-    # Mount the Nginx configuration file and static website files
+    # Mount the Nginx configuration file
     volumes:
-      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./Nginx/html:/usr/share/nginx/html:ro
+      - ./Nginx/Nginx.conf:/etc/nginx/nginx.conf:ro
