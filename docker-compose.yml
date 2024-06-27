@@ -12,6 +12,9 @@ services:
     # Mount the current directory to /app inside the container
     volumes:
       - ./:/app
+    env_file:
+      - .env
+
 
   web:
     # Build the Docker image from the Nginx directory
