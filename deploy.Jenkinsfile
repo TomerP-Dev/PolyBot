@@ -26,7 +26,7 @@ pipeline {
                     bat """
                         echo "Pushing docker image to DockerHub..."
                         docker login -u %DOCKER_USERNAME% -p %DOCKER_PASS%
-                        docker push ${IMG_NAME}
+                        docker push ${env.IMG_NAME}
                     """
                 }
             }
@@ -36,7 +36,7 @@ pipeline {
             steps {
                 bat """
                     echo "Pushed to DockerHub successfully."
-                    echo "Deploying ${IMG_NAME} to the environment..."
+                    echo "Deploying ${env.IMG_NAME} to the environment..."
                 """
             }
         }
