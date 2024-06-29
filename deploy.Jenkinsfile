@@ -6,28 +6,38 @@ pipeline {
     }
 
     environment {
-        IMG_NAME = "${params.IMAGE_URL}".toLowerCase()
+        // Placeholder for the variable, to be set in the script block
+        IMG_NAME = ''
     }
 
     stages {
+        stage('Set Environment Variables') {
+            steps {
+                script {
+                    // Set the IMG_NAME environment variable with the lowercase IMAGE_URL
+                    env.IMG_NAME = params.IMAGE_URL.toLowerCase()
+                }
+            }
+        }
+
         stage('Push docker image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASS')]) {
-                    bat '''
+                    bat """
                         echo "Pushing docker image to DockerHub..."
                         docker login -u %DOCKER_USERNAME% -p %DOCKER_PASS%
-                        docker push ${IMAGE_URL}
-                    '''
+                        docker push ${IMG_NAME}
+                    """
                 }
             }
         }
 
         stage('Deploy') {
             steps {
-                bat '''
+                bat """
                     echo "Pushed to DockerHub successfully."
-                    echo "Deploying ${IMAGE_URL} to the environment..."
-                '''
+                    echo "Deploying ${IMG_NAME} to the environment..."
+                """
             }
         }
     }
