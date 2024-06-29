@@ -16,12 +16,14 @@ pipeline {
                 script {
                     // Set the IMG_NAME environment variable with the lowercase IMAGE_URL
                     env.IMG_NAME = params.IMAGE_URL.toLowerCase()
+                    echo "IMG_NAME set to: ${env.IMG_NAME}"
                 }
             }
         }
 
         stage('Push docker image') {
             steps {
+                echo "Pushing docker image: ${env.IMG_NAME}"
                 withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASS')]) {
                     bat """
                         echo "Pushing docker image to DockerHub..."
