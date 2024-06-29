@@ -13,8 +13,8 @@ pipeline {
                         docker login -u %DOCKER_USERNAME% -p %DOCKER_PASS%
                         docker build -t %IMG_NAME% .
                         docker tag %IMG_NAME% tomerp18/polybot:%BUILD_NUMBER%
-                        echo Built image name: %IMG_NAME%
                     """
+                    bat "echo Built image name: %IMG_NAME%"
                 }
             }
         }
