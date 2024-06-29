@@ -11,7 +11,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASS')]) {
                     bat '''
                         docker login -u %DOCKER_USERNAME% -p %DOCKER_PASS%
-                        docker push tomerp18/%IMG_NAME%
+                        docker push ${IMAGE_URL}
                         echo "Pushed ${IMAGE_URL} to DockerHub successfully."
                     '''
                 }

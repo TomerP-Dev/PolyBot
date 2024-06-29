@@ -13,6 +13,7 @@ pipeline {
                         docker login -u %DOCKER_USERNAME% -p %DOCKER_PASS%
                         docker build -t %IMG_NAME% .
                         docker tag %IMG_NAME% tomerp18/%IMG_NAME%
+                        echo "Built image name: ${IMG_NAME}"
                     '''
                 }
             }
