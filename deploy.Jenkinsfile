@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        // Placeholder for the variable, to be set in the script block
+        // Placeholder for the variable
         IMG_NAME = ''
     }
 
@@ -14,10 +14,8 @@ pipeline {
         stage('Set Environment Variables') {
             steps {
                 script {
-                    // Add debug statement to check the value of IMAGE_URL
-                    echo "Received IMAGE_URL: ${params.IMAGE_URL}"
                     // Set the IMG_NAME environment variable with the lowercase IMAGE_URL
-                    env.IMG_NAME = params.IMAGE_URL.toLowerCase()
+                    env.IMG_NAME = "${params.IMAGE_URL}".toLowerCase()
                     echo "IMG_NAME set to: ${env.IMG_NAME}"
                 }
             }
