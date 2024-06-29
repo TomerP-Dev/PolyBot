@@ -5,6 +5,10 @@ pipeline {
         string(name: 'IMAGE_URL', defaultValue: '', description: 'Docker image URL to deploy')
     }
 
+    environment {
+        IMG_NAME = "${params.IMAGE_URL}".toLowerCase()
+    }
+
     stages {
         stage('Push docker image') {
             steps {
