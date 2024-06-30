@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '30'))
+        disableConcurrentBuilds()
+        timestamps()
+    }
+
     environment {
         IMG_NAME = "polybot:${BUILD_NUMBER}"
     }
@@ -25,6 +31,15 @@ pipeline {
                     string(name: 'IMAGE_URL', value: "tomerp18/${IMG_NAME}")
                 ]
             }
+        }
+    }
+
+    post {
+        always {
+            bat '''
+                docker rmi %IMG_NAME%
+                docker system prune -f
+            '''
         }
     }
 }

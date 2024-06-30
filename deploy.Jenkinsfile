@@ -1,8 +1,14 @@
 pipeline {
     agent any
 
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '30'))
+        disableConcurrentBuilds()
+        timestamps()
+    }
+
     parameters {
-     string(name: 'IMAGE_URL', defaultValue: '', description: '')
+        string(name: 'IMAGE_URL', defaultValue: '', description: '')
     }
 
     stages {
@@ -12,6 +18,12 @@ pipeline {
                     echo "Pushed to DockerHub successfully."
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
